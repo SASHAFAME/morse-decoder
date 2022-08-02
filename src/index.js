@@ -38,8 +38,23 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
-}
+    let splitExpr = expr.split('');
+    let count = splitExpr.length / 10;
+    let separatedArr = [];
+    for (let i = 0; i < count; i++) {
+      separatedArr.push(splitExpr.splice(0, 10));
+    }
+    let decimalArr = [];
+    separatedArr.forEach((item) =>
+      decimalArr.push(item.join('').replace(/^0+/, ''))
+    );
+    let morseArr = decimalArr.map((item) =>
+      item.replace(/10/g, '.').replace(/11/g, '-')
+    );
+    return morseArr
+      .map((item) => (item === '**********' ? ' ' : MORSE_TABLE[item]))
+      .join('');
+  }
 
 module.exports = {
     decode
